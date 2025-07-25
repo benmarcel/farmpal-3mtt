@@ -39,7 +39,7 @@ const FarmPalHome = () => {
           <p className="text-gray-600 mb-4">Help farmers with expert advice and field guidance.</p>
           <div className="flex gap-4">
             <button
-              onClick={() => navigate('/expert-login')}
+              onClick={() => navigate('/expert-register')}
               className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
             >
               Log In

@@ -11,6 +11,7 @@ function Chat() {
   const chatRef = useRef(null); // Ref for scrolling
   const [currentSpeakingId, setCurrentSpeakingId] = useState(null); // To manage which message is speaking
 
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
   // Scroll to bottom whenever messages change
   useEffect(() => {
     if (chatRef.current) {
@@ -41,7 +42,7 @@ function Chat() {
     showLoading();
 
     try {
-      const res = await axios.post('http://localhost:5000/farmpal/ai/ask', { message });
+      const res = await axios.post(`${baseUrl}/farmpal/ai/ask`, { message });
       removeLoading();
       addMessage(res.data.reply, 'ai');
     } catch (err) {
@@ -114,7 +115,7 @@ function Chat() {
     formData.append('image', file);
 
     try {
-      const res = await axios.post('http://localhost:5000/farmpal/ai/diagnose', formData, {
+      const res = await axios.post(`${baseUrl}/farmpal/ai/diagnose`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -207,14 +208,12 @@ function Chat() {
             placeholder="Ask your farming question..."
             value={typedQuestion}
             onChange={(e) => setTypedQuestion(e.target.value)}
-            // flex-1 allows it to grow, min-w-0 ensures it can shrink past its content's intrinsic width.
-            // w-full on smaller screens, effectively overriding flex-1 if wrapped.
             className="flex-1 p-2 rounded-2xl bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none
                        resize-none overflow-hidden h-auto max-h-40 min-w-0 sm:min-w-[200px]" // min-w-0 for small screens
         />
 
-        {/* Action Buttons - clustered on the right, potentially wrapping below the input */}
-        <div className="flex gap-1.5 items-center pl-2 mt-2 sm:mt-0 ml-auto"> {/* ml-auto pushes buttons to the right if space allows */}
+        {/* Action Buttons  */}
+        <div className="flex gap-1.5 items-center pl-2 mt-2 sm:mt-0 ml-auto"> {/* flex gap for buttons */}
             {/* Voice Button */}
             <button
                 type="button"
