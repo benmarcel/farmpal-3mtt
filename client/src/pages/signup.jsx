@@ -71,7 +71,7 @@ const Signup = () => {
             });
             // Redirect after a short delay to allow user to see success message
             setTimeout(() => {
-                navigate('/dashboard'); // Redirect to dashboard or login page
+                navigate('/chat'); // Redirect to chat page
             }, 1500); // Redirect after 1.5 seconds
         } else {
             // If signup fails, useAuth's error state will be set,

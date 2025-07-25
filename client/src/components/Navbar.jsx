@@ -49,12 +49,12 @@ const Navbar = () => {
           
          
           <NavLink
-            to="/dashboard"
+            to="/contact-expert"
             className={({ isActive }) =>
               ` hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
             }
           >
-          Dashboard 
+          Contact-expert
           </NavLink>
           <NavLink
             to="/weather"
@@ -123,13 +123,13 @@ const Navbar = () => {
           </NavLink>
           
           <NavLink
-            to="/dashboard"
+            to="/contact-expert"
             onClick={closeMenu}
             className={({ isActive }) =>
               `text-gray-700 hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
             }
           >
-            Dashboard 
+            Contact-expert
           </NavLink>
           <NavLink
             to="/weather"
