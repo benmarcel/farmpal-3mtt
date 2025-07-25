@@ -6,7 +6,7 @@ const FarmPalHome = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f6fdf7] flex flex-col items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-[#f6fdf7] flex flex-col items-center justify-center px-4 py-8 max-sm:mt-16">
       <h1 className="text-4xl font-bold text-green-700 mb-2">🌾 Welcome to FarmPal</h1>
       <p className="text-gray-600 text-center max-w-xl mb-8">
         Your smart assistant for agriculture. Connect with experts, manage your farm, and get real-time support.
