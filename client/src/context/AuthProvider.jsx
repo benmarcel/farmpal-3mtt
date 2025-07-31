@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import useFetch from "../hooks/useFetch"; // Adjust the path if your useFetch hook is in a different directory
 import { AuthContext } from "./AuthContext";
 
  const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true); // State to manage loading status 
   const { request, loading, error } = useFetch();
 
 
@@ -58,47 +59,54 @@ import { AuthContext } from "./AuthContext";
     localStorage.removeItem("jwtToken");
     setUser(null);
     setIsAuthenticated(false);
-    // You might want to also send a request to a logout endpoint on your backend
-    // if you need to invalidate sessions on the server side.
-    // e.g., request("/auth/logout", "POST");
+   
     return { success: true, message: "Logged out successfully." };
   }, []);
 
-  // const checkUserStatus = useCallback(async () => {
-  //   const token = localStorage.getItem("jwtToken");
-  //   if (!token) {
-  //     localStorage.removeItem("jwtToken");
-  //     setUser(null);
-  //     setIsAuthenticated(false);
-  //     return false;
-  //   }
+  const checkUserStatus = useCallback(async () => {
+    setIsLoadingAuth(true); // Set loading state to true while checking status
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      localStorage.removeItem("jwtToken");
+      setUser(null);
+      setIsAuthenticated(false);
+      setIsLoadingAuth(false); // Set loading state to false
+      return false;
+    }
 
-  //   try {
-  //     // Assuming you have an endpoint like /auth/me that returns the current user's data
-  //     // if the token is valid.
-  //     const data = await request("/auth/me", "GET");
-  //     if (data && data.user) {
-  //       setAuthStatus(data.user, token); // Re-authenticate with the existing token
-  //       return true;
-  //     } else {
-  //       setAuthStatus(null, null); // Token might be invalid or expired
-  //       return false;
-  //     }
-  //   } catch (err) {
-  //     console.error("Check user status error:", err);
-  //     setAuthStatus(null, null); // Clear status if there's an error
-  //     return false;
-  //   }
-  // }, [request, setAuthStatus]);
+    try {
+      // Assuming you have an endpoint like /auth/me that returns the current user's data
+      // if the token is valid.
+      const data = await request("/auth/me", "GET");
+      if (data && data.user) {
+        setUser(data.user); // Re-authenticate with the existing token
+        setIsAuthenticated(true);
+        console.log("User status checked successfully:", data.user);
+        setIsLoadingAuth(false); // Set loading state to false
+        return true;
+      } else {
+        setUser(null); // Token might be invalid or expired
+        return false;
+      }
+    } catch (err) {
+      console.error("Check user status error:", err);
+       // Set loading state to false  
+      setUser(null); // Clear status if there's an error
+      return false;
+    }finally {
+      setIsLoadingAuth(false); // Ensure loading state is set to false after checking status
+    }
+  }, [request]);
 
   // Effect to check user status on component mount
-  // useEffect(() => {
-  //   checkUserStatus();
-  // }, [checkUserStatus]); // Run only once on mount
+  useEffect(() => {
+    checkUserStatus();
+  }, [checkUserStatus]); // Run only once on mount
 
   const authContextValue = {
     user,
     isAuthenticated,
+    isLoadingAuth,
     loading,
     error,
     login,

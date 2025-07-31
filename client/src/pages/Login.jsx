@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Alert from '../components/Alert'; // Adjust path as needed for your Alert component
 
 function LoginPage() {
-  const { login, loading, error, isAuthenticated } = useAuth();
+  const { login, loading, error, } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -20,12 +20,7 @@ function LoginPage() {
     }
   }, [error]); // Depend on the error state from useAuth
 
-  // If already authenticated, redirect immediately
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/contact-expert'); // Or any other protected route
-    }
-  }, [isAuthenticated, navigate]); // Depend on isAuthenticated and navigate
+
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,7 +44,10 @@ function LoginPage() {
 
     if (result.success) {
       setAlertInfo({ message: result.message, type: 'success' });
-      // The useEffect for isAuthenticated will handle redirection
+      
+      setTimeout(() => {
+                navigate('/inventory'); // Redirect to inventory page
+            }, 1500);
     } else {
       // If login fails, useAuth's error state will be set,
       // and the useEffect above will display the error.
@@ -68,11 +66,7 @@ function LoginPage() {
     setAlertInfo(null);
   };
 
-  // If already authenticated, the useEffect above handles navigation,
-  // so we can return null or a simple message here to prevent rendering the form temporarily.
-  if (isAuthenticated) {
-    return null; 
-  }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-6 lg:p-8">
@@ -130,11 +124,9 @@ function LoginPage() {
             {/* Font Awesome icons for password visibility. Ensure Font Awesome is linked in your index.html */}
             <i 
               onClick={() => setPasswordVisible(!passwordVisible)} 
-              className={`cursor-pointer ${passwordVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"} absolute right-3 top-[45%] transform -translate-y-1/2 text-gray-500 hover:text-gray-700`}
+              className={`cursor-pointer ${passwordVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"} absolute right-3 top-[60%] transform -translate-y-1/2 text-gray-500 hover:text-gray-700`}
             ></i>
-            <Link to="/forgot-password" className="inline-block align-baseline font-bold text-sm text-[var(--color-primary)] hover:text-[var(--color-secondary)]"> 
-              Forgot Password?
-            </Link>
+           
           </div>
 
           <button

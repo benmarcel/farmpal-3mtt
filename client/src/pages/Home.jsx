@@ -6,8 +6,8 @@ const FarmPalHome = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f6fdf7] flex flex-col items-center justify-center px-4 py-8 max-sm:mt-16">
-      <h1 className="text-4xl font-bold text-green-700 mb-2">🌾 Welcome to FarmPal</h1>
+    <div className="min-h-screen bg-[#f6fdf7] flex flex-col items-center justify-center px-4 py-8 max-sm:mt-15">
+      <h1 className="text-4xl font-bold text-green-700 mb-2 max-sm:text-2xl text-center">🌾 Welcome to FarmPal</h1>
       <p className="text-gray-600 text-center max-w-xl mb-8">
         Your smart assistant for agriculture. Connect with experts, manage your farm, and get real-time support.
       </p>
@@ -15,7 +15,7 @@ const FarmPalHome = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
         {/* Farmer Card */}
         <div className="bg-white p-6 rounded-2xl shadow-md border border-green-100">
-          <h2 className="text-2xl font-semibold mb-2 text-green-800">👨‍🌾 I’m a Farmer</h2>
+          <h2 className="text-2xl font-semibold mb-2 text-green-800">👨‍🌾 I'm a Farmer</h2>
           <p className="text-gray-600 mb-4">Access tools, ask questions, and connect with extension officers.</p>
           <div className="flex gap-4">
             <button

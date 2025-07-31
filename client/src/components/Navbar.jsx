@@ -19,12 +19,12 @@ const Navbar = () => {
   };
   return (
  
-      <header className=" shadow-md p-2 absolute top-0 left-0 w-full z-50 bg-white text-primary">
+      <header className=" shadow-md  absolute top-0 left-0 w-full z-50 bg-white text-primary">
       {/* Navigation Bar */}
       <nav className="container mx-auto flex justify-between items-center">
         {/* Logo */}
          <div className='inline-flex items-center space-x-2 '>
-            <img src="/farmpal-logo.png" alt="Logo" width={70} height={70} />
+            <img src="/farmpal-logo.png" alt="Logo" width={60} height={60} />
         </div>
 
         {/* Desktop Navigation - Hidden on small screens, visible on medium and up */}
@@ -41,7 +41,7 @@ const Navbar = () => {
             to="/chat"
             onClick={closeMenu}
             className={({ isActive }) =>
-              `text-gray-700 hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
+              ` hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
             }
           >
             Chat
@@ -55,6 +55,14 @@ const Navbar = () => {
             }
           >
           Contact-expert
+          </NavLink>
+          <NavLink
+            to="/inventory"
+            className={({ isActive }) =>
+              ` hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
+            }
+          >
+            Inventory
           </NavLink>
           <NavLink
             to="/weather"
@@ -130,6 +138,15 @@ const Navbar = () => {
             }
           >
             Contact-expert
+          </NavLink>
+          <NavLink
+            to="/inventory"
+            onClick={closeMenu}
+            className={({ isActive }) =>
+              `text-gray-700 hover:text-secondary transition duration-300 ${isActive ? 'font-bold text-secondary' : ''}`
+            }
+          >
+            Inventory
           </NavLink>
           <NavLink
             to="/weather"

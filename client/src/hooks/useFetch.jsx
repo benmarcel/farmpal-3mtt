@@ -35,7 +35,7 @@ function useFetch() {
 
     try {
       const url = baseURL + endpoint;
-      console.log(body)
+      // console.log(body)
       const response = await axios({
         url,
         ...config,

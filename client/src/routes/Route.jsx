@@ -8,12 +8,14 @@ import ContactExpert  from "../pages/ContactExpert";
 import WeatherRec from "../pages/WeatherRec";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ExpertRegister from "../pages/Expert/ExpertRegister"; 
+import InventoryDashboard from "../pages/inventory";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<FarmPalHome />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/inventory" element={<ProtectedRoute><InventoryDashboard /></ProtectedRoute>} />
         <Route path="/expert-register" element={<ExpertRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

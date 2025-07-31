@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import Alert from "../components/Alert";
 import { marked } from 'marked'; 
+import useAuth from "../context/useAuth";
 const WeatherRec = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [alertInfo, setAlertInfo] = useState(null); // State to control the Alert component: { message: '', type: '' }
@@ -9,7 +10,7 @@ const WeatherRec = () => {
   // Destructure loading and error from useFetch
 
   const { request, loading, error: apiError } = useFetch();
-
+  const { user } = useAuth(); // Get user info from context
   const fetchWeatherData = async () => {
     // Clear previous data and alerts before starting a new fetch
     setWeatherData(null);
@@ -32,6 +33,7 @@ const WeatherRec = () => {
           const data = await request("/farmpal/weather/recc", "POST", {
             lat: latitude,
             lon: longitude,
+            name: user?.name  
           });
 
           // Set the fetched weather data
@@ -87,7 +89,7 @@ const WeatherRec = () => {
         <button
           onClick={fetchWeatherData}
           disabled={loading}
-          className="w-full bg-[#2E6206] hover:bg-green-800 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#2E6206] hover:bg-green-800 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed max-w-xl mx-auto flex items-center justify-center"
         >
           {loading
             ? "Getting Recommendations..."

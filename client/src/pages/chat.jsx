@@ -64,7 +64,7 @@ function Chat() {
     recognition.lang = 'en-US';
     recognition.interimResults = false; // Get final results
 
-    addMessage("Listening...", "ai"); // Indicate listening state
+     // Indicate listening state
     recognition.start();
 
     recognition.onresult = (event) => {
