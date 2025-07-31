@@ -6,7 +6,24 @@ import mongoose from 'mongoose';
 
 const app = express();
 
-app.use(cors()); // Enable CORS for all routes
+const allowedOrigins = [
+  'https://farmpal-3mtt-hoitj2tdp-chima-marcels-projects.vercel.app',
+  'http://localhost:5173'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow request
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  credentials: true
+})); 
+
+// Middleware to parse incoming requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(express.json()); // Parse JSON bodies
 

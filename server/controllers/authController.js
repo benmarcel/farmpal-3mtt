@@ -108,26 +108,17 @@ export const login = async (req, res) => {
   }
 };
 
-export const  forgotPassword = async (req, res) => {
-  const { email } = req.body;   
+
+export const userAuth = async (req, res) => {
+  const id = req.user.id; // `req.user` is populated by the `authenticateToken` middleware
   try {
-    // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findById(id).select("-password"); // Exclude password
     if (!user) {
       return res.status(404).json({ message: "User not found", success: false });
     }
-
-    // Generate password reset token
-    const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-
-    // Send email with reset link (pseudo-code)
-    // await sendPasswordResetEmail(user.email, resetToken);
-
-    res.status(200).json({ message: "Password reset email sent", success: true });
+    res.status(200).json({ user, success: true });
   } catch (error) {
-    console.error("Forgot password error:", error);
+    console.error("Get profile error:", error);
     res.status(500).json({ message: "Server error", success: false });
   }
 };

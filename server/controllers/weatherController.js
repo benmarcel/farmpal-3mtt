@@ -7,7 +7,7 @@ const model = gemini.getGenerativeModel({ model: "gemini-2.5-flash" });
 const WEATHER_API_KEY = process.env.OPENWEATHER_KEY;
 
 const getWeatherRecommendations = async (req, res) => {
-  const { lat, lon } = req.body;
+  const { lat, lon, name } = req.body;
   const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${WEATHER_API_KEY}&units=metric`;
 
   try {
@@ -25,7 +25,7 @@ const getWeatherRecommendations = async (req, res) => {
     if (!model) {
       return res.status(500).json({ error: "Model not found" });
     }
-    const prompt = `As an AI farming advisor for Nigerian farmers, analyze the current weather: ${description}, ${temp}°C, ${humidity}% humidity. Provide 2-3 concise and actionable farming recommendations. For each recommendation, briefly explain its relevance to these specific weather conditions. Focus on practical aspects like planting, watering, or pest/disease management relevant to Nigerian agriculture.`;
+   const prompt = `Hello ${name}, as your AI farming advisor, considering the current weather: ${description}, ${temp}°C, ${humidity}% humidity, here are 2-3 concise and actionable farming recommendations for your farm. For each recommendation, briefly explain its relevance to these specific weather conditions. Focus on practical aspects like planting, watering, or pest/disease management relevant to Nigerian agriculture.`;
     
     const result = await model.generateContent(prompt);
     const aiResponse = result.response.text();
